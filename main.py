@@ -27,9 +27,9 @@ def signup():
         user_name = request.form['username']
         user_email = request.form['email']
         user_password = request.form['password']
-        type = request.form['user_type']
+        user_type = request.form['user_type']
 
-        new_user = users(name=user_name, email=user_email, password=user_password, user_type=type)
+        new_user = users(name=user_name, email=user_email, password=user_password, user_type=user_type)
         db.session.add(new_user)
         db.session.commit()
 
