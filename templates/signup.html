@@ -8,5 +8,15 @@
 <body>
     <a href="/">Log In</a>
     <h1>User Signup</h1>
+    <form method="POST" action="/user_signup">
+        <input type="text"  name="user_type" value="customer" required hidden>
+        <br>
+        <input type="text"  name="username" placeholder="Enter Username" required>
+        <br>
+        <input type="email"  name="email" placeholder="Enter Email" required>
+        <br>
+        <input type="password"  name="password"  placeholder="Enter Password" required>
+        <br>
+        <input type="submit" value="Sign Up">
 </body>
 </html>

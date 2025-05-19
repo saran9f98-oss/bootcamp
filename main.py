@@ -1,4 +1,4 @@
-from flask import Flask, render_template , request
+from flask import Flask, render_template , request , redirect, url_for
 import os
 from model import *
 
@@ -17,13 +17,23 @@ def login():
     if request.method == "POST":
         user_email = request.form['email']
         user_password = request.form['password']
-        print(user_email)
-        print(user_password)
-        return render_template("home.html", message=user_email)
+        user = users.query.filter_by(email=user_email, password=user_password).first()
+        return render_template("home.html", username=user.name)
     return render_template("login.html")
 
-@app.route("/user_signup", methods=["GET"])
+@app.route("/user_signup", methods=["GET", "POST"])
 def signup():
+    if request.method == "POST":
+        user_name = request.form['username']
+        user_email = request.form['email']
+        user_password = request.form['password']
+        type = request.form['user_type']
+
+        new_user = users(name=user_name, email=user_email, password=user_password, user_type=type)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for("login"))
     return render_template("signup.html")
 
 if __name__ == "__main__":
