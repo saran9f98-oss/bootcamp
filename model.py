@@ -21,7 +21,12 @@ class booking_data(db.Model):
 class resturant_data(db.Model):
     __tablename__ = "resturant_data"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(), nullable=False)
+    name = db.Column(db.String(), nullable=False, unique=True)
     location = db.Column(db.String(), nullable=False)
-    table_id = db.Column(db.Integer, nullable=False)
+    
+class table_data(db.Model):
+    __tablename__ = "table_data"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    resturant_id = db.Column(db.Integer, nullable=False)
+    
    
