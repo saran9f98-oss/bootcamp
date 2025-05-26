@@ -23,10 +23,17 @@ class resturant_data(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(), nullable=False, unique=True)
     location = db.Column(db.String(), nullable=False)
-    
+    description = db.Column(db.String(), nullable=True)
+    tables = db.relationship('table_data', secondary='resturant_table_relation')
+
+class resturant_table_relation(db.Model):
+    __tablename__ = "resturant_table_relation"
+    resturant_id = db.Column(db.Integer, db.ForeignKey('resturant_data.id'), primary_key=True, nullable=False)
+    table_id = db.Column(db.Integer, db.ForeignKey('table_data.id'), primary_key=True, nullable=False)   
+
 class table_data(db.Model):
     __tablename__ = "table_data"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    resturant_id = db.Column(db.Integer, nullable=False)
+    capacity = db.Column(db.Integer, nullable=False)
     
    

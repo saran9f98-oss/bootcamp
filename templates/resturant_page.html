@@ -6,10 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    {% for resturants in search_result %}
-    <h1>
-        <a href="/resturant_page/{{ resturants.name }}">{{ resturants.name }}</a>
-    </h1>
-    {% endfor %}
+   <h1>{{ resturant_data.name }}</h1> 
+   <h3>{{ resturant_data.location }}</h3>
+   <p>{{ resturant_data.description }}</p>
+   {{ resturant_data.tables }} 
 </body>
 </html>

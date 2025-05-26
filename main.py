@@ -58,13 +58,22 @@ def search_result_page():
     if request.method == "POST":
         if  request.form['form_type'] == "name":
             resturant_name = request.form['resturant_name']
-            search_result = resturant_data.query.filter_by(name=resturant_name).first()
-            return render_template("searchResult.html" )
+            search_result = resturant_data.query.filter(resturant_data.name.ilike(resturant_name)).first()
+            if search_result is None:
+                return 'Restaurant not found'
+            else:
+                return redirect(url_for("resturant_page", resturant_name=search_result.name))
         
         elif request.form['form_type'] == "location":
             resturant_location = request.form['resturant_location']
             search_result = resturant_data.query.filter_by(location=resturant_location).all()
             return render_template("searchResult.html", search_result=search_result)
+        
+@app.route("/resturant_page/<resturant_name>", methods=["GET", "POST"])
+def resturant_page(resturant_name):
+    search_result = resturant_data.query.filter(resturant_data.name.ilike(resturant_name)).first()
+    return render_template("resturant_page.html", resturant_data=search_result)
+
        
     
 if __name__ == "__main__":
