@@ -16,7 +16,7 @@ class booking_data(db.Model):
     user_id = db.Column(db.Integer)
     resturant_id = db.Column(db.Integer)
     date = db.Column(db.String())
-    table_id = db.Column(db.String())
+    table_ids = db.Column(db.String())
 
 class resturant_data(db.Model):
     __tablename__ = "resturant_data"
@@ -24,16 +24,17 @@ class resturant_data(db.Model):
     name = db.Column(db.String(), nullable=False, unique=True)
     location = db.Column(db.String(), nullable=False)
     description = db.Column(db.String(), nullable=True)
-    tables = db.relationship('table_data', secondary='resturant_table_relation')
+    tables = db.relationship('resturant_table_data', secondary='resturant_table_relation')
 
 class resturant_table_relation(db.Model):
     __tablename__ = "resturant_table_relation"
     resturant_id = db.Column(db.Integer, db.ForeignKey('resturant_data.id'), primary_key=True, nullable=False)
-    table_id = db.Column(db.Integer, db.ForeignKey('table_data.id'), primary_key=True, nullable=False)   
+    table_id = db.Column(db.Integer, db.ForeignKey('resturant_table_data.id'), primary_key=True, nullable=False)   
 
-class table_data(db.Model):
-    __tablename__ = "table_data"
+class resturant_table_data(db.Model):
+    __tablename__ = "resturant_table_data"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    table_code = db.Column(db.String(), nullable=False, unique=True)
     capacity = db.Column(db.Integer, nullable=False)
     
    

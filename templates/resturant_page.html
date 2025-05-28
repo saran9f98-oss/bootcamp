@@ -9,6 +9,13 @@
    <h1>{{ resturant_data.name }}</h1> 
    <h3>{{ resturant_data.location }}</h3>
    <p>{{ resturant_data.description }}</p>
-   {{ resturant_data.tables }} 
+
+  
+   <h1>Book Table</h1>
+   <form action="/table_booking_page/{{ resturant_data.id }}/{{ customer_id }}" method="get">
+    <input type="date" name="search_date" placeholder="Enter Date" min="2025-05-28" required >
+    <br>
+    <input type="submit" value="search">
+   </form>
 </body>
 </html>

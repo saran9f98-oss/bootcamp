@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+    <a href="/">Log In</a>
+    <h1>User Signup</h1>
+    <form method="POST" action="/resturant_signup">
+        <input type="text"  name="user_type" value="resturant" required hidden>
+        <br>
+        <input type="text"  name="username" placeholder="Enter  Resturant Name" required>
+        <br>
+        <input type="email"  name="email" placeholder="Enter Email" required>
+        <br>
+        <input type="password"  name="password"  placeholder="Enter Password" required>
+        <br>
+        <input type="text"  name="location"  placeholder="Resturant Location" required>
+        <br>
+        <input type="text"  name="description"  placeholder="Resturant Description" required>
+        <br>
+        <input type="submit" value="Sign Up">
+    </form>
+</body>
+</html>

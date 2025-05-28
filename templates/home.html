@@ -6,16 +6,16 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>Welcome {{ username }}</h1>
+    <h1>Welcome {{ user_data.name }}</h1>
 
-    <form action="/search_results" method="POST">
+    <form action="/search_results/{{ user_data.id }}" method="POST">
         <input type="hidden" name="form_type" value="name">
         <input type="text" name="resturant_name" placeholder="Enter Resturant Name"  required> 
         <input type="submit" value="Search">
     </form>
 
 
-    <form action="/search_results" method="POST">
+    <form action="/search_results/{{ user_data.id }}" method="POST">
         <input type="hidden" name="form_type" value="location">
         <label >Select Location:</label>
         <select name="resturant_location">

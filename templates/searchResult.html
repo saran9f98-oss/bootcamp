@@ -8,7 +8,7 @@
 <body>
     {% for resturants in search_result %}
     <h1>
-        <a href="/resturant_page/{{ resturants.name }}">{{ resturants.name }}</a>
+        <a href="/resturant_page/{{ resturants.name }}/{{ customer_id }}">{{ resturants.name }}</a>
     </h1>
     {% endfor %}
 </body>
