@@ -34,8 +34,29 @@ def login():
                 if user.user_type == 'customer':
                     unique_locations = resturant_data.query.with_entities(resturant_data.location).distinct().all()
                     locations = [loc[0] for loc in unique_locations]
-                    print(locations)
-                    return render_template("home.html", user_data=user, location_data=locations)
+                    
+                    bookings_raw = booking_data.query.filter_by(user_id=user.id).all()
+
+                    user_bookings = {}
+                    for booking in bookings_raw:
+                        resturant = resturant_data.query.filter_by(id=booking.resturant_id).first()
+                        table = resturant_table_data.query.filter_by(id=booking.table_ids).first()
+                        user_bookings[booking.id] = {
+                            "resturant": resturant.name,
+                            "location": resturant.location,
+                            "date": booking.date,
+                            "table": table.table_code,
+                            "table_size": table.capacity
+                        }
+                    print(user_bookings)
+
+
+                    
+
+                    return render_template("home.html",
+                                            user_data=user, 
+                                            location_data=locations,
+                                            user_bookings=user_bookings)
                 
                 elif user.user_type == 'resturant':
                     return render_template("resturant_home.html", resturant_data=user)
@@ -152,12 +173,17 @@ def resturant_page(resturant_name, customer_id):
 @app.route("/table_booking_page/<resturant_ID>/<customer_id>", methods=["GET"])
 def table_booking_page(resturant_ID, customer_id):
     user_date = request.args.get('search_date')
-    current_booking = booking_data.query.filter_by(resturant_id=resturant_ID, date=user_date).first()
+    current_booking = booking_data.query.filter_by(resturant_id=resturant_ID, date=user_date).all()
     if current_booking:
-        print(current_booking.table_ids)
+        booked_tables = []
+
+        for booking in current_booking:
+            print(booking.table_ids)
+            booked_tables.append(booking.table_ids)
+
         rest_data = resturant_data.query.filter_by(id=resturant_ID).first()
 
-        unbooked_tables = [ table for table in rest_data.tables if str(table.id) not in current_booking.table_ids.split(',')]
+        unbooked_tables = [ table for table in rest_data.tables if str(table.id) not in booked_tables ]
         return render_template("table_booking_page.html", 
                                resturant_data=rest_data,
                                unbooked_tables=unbooked_tables, 
@@ -165,8 +191,10 @@ def table_booking_page(resturant_ID, customer_id):
                                date=user_date)
     else:
         rest_data = resturant_data.query.filter_by(id=resturant_ID).first()
+        unbooked_tables = rest_data.tables
         return render_template("table_booking_page.html", 
                                resturant_data=rest_data, 
+                               unbooked_tables=unbooked_tables, 
                                customer_id=customer_id, 
                                date=user_date)
 

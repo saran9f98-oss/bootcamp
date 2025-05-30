@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    {% for table in resturant_data.tables %}
+    {% for table in unbooked_tables %}
     <h1>Table Code: {{ table.table_code }}</h1>
     <h3>Table Size: {{ table.capacity }}</h3>
     <form action="/book_table/{{ table.id }}/{{ resturant_data.id }}/{{ customer_id }}/{{ date }}" method="post">
@@ -14,5 +14,6 @@
     </form>
         
     {% endfor %}
+
 </body>
 </html>
